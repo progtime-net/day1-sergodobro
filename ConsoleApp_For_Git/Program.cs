@@ -10,6 +10,10 @@ namespace ConsoleApp_For_Git
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello! What is your name, user?");
+            var name = Console.ReadLine();
+            Console.WriteLine($"Hello, {name}! Welcome to our world!");
+            Console.ReadLine();
         }
     }
 }
