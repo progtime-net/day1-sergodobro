@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp_For_Git
 {
-    interface ICalculator_Action
+    interface ICalculator_Operation
     {
-        string Action_signature { get; set; } //+,-,*, etc.
+        string Operation_signature { get; set; } //+,-,*, etc.
         double GetResult(double num1, double num2); //executeThisAction
     }
 }

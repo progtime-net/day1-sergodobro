@@ -8,22 +8,18 @@ namespace ConsoleApp_For_Git
 {
     interface ICalculator
     {
-        void Start(); //get input, start program, load Actions
-        void Calculate(string input); //calculator main
+        void Start(); //greetings, load operations, get equation, output result
+        double Calculate(string input); 
                                       //Split equation
+                                      //find operation
                                       //Calculate it
                                       //костяк программы короче
 
 
 
-        List<ICalculator_Action> action_List { get; set; }
-        void LoadActions();
-
-
-
-        double num1 { get; set; }
-        double num2 { get; set; }
-        ICalculator_Action action { get; set; }
-        void SplitEquation(); // set num1, num2, action(Find from action_List)
+        List<ICalculator_Operation> action_List { get; set; }
+        void LoadOperations();
+        ICalculator_Operation FindOperationInList(string signature);
+         
     }
 }
