@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 namespace ConsoleApp_For_Git
 {
     interface ICalculator
-    {
-        void Start(); //greetings, load operations, get equation, output result
-        double Calculate(string input); 
-                                      //Split equation
-                                      //find operation
-                                      //Calculate it
-                                      //костяк программы короче
+    { 
 
+        void Start(); //take input
 
+        double SolveEquation(string equation);
+        /// 1 - convertToWorkingData
+        /// save indexes of opening skobkas to list, when you find closing skobkas, решите выражение между индексами и удалите использованные элементы 
 
-        List<ICalculator_Operation> action_List { get; set; }
-        void LoadOperations();
-        ICalculator_Operation FindOperationInList(string signature);
-         
+        List<string> SplitEquationToFormat(string equation);
+        ///exmplanation
+        ///turn 1+2+(7*9-(3-2))
+        ///into list {1}{+}{2}{+}{(}{7}{*}{9}{-}{(}{3}{-}{2}{)}{)}
+
+            
+        double solveSkobka(List<string> span, int indexFrom, int indexTo); //Replace old partindata and move all second skobka indexes
     }
 }

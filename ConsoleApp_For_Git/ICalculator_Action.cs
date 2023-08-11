@@ -8,7 +8,8 @@ namespace ConsoleApp_For_Git
 {
     interface ICalculator_Operation
     {
-        string Operation_signature { get; set; } //+,-,*, etc.
+        bool isPrioritized { get; set; }
+        string Action_signature { get; set; } //+,-,*, etc.
         double GetResult(double num1, double num2); //executeThisAction
     }
 }
