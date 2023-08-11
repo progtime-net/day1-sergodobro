@@ -10,6 +10,8 @@ namespace ConsoleApp_For_Git
     { 
 
         void Start(); //take input
+        void LoadOperationList();
+        ICalculator_Operation FindOperation(string signature);
 
         double SolveEquation(string equation);
         /// 1 - convertToWorkingData
