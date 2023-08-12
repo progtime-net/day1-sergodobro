@@ -45,7 +45,12 @@
   <ItemGroup>
     <Compile Include="Calculator.cs" />
     <Compile Include="ICalculator.cs" />
-    <Compile Include="ICalculator_Action.cs" />
+    <Compile Include="ICalculator_Operation.cs" />
+    <Compile Include="Operations\Operation_Minus.cs" />
+    <Compile Include="Operations\Operation_Divide.cs" />
+    <Compile Include="Operations\Operation_Multiply.cs" />
+    <Compile Include="Operations\Operation_Plus.cs" />
+    <Compile Include="Operations\Operation_Power.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
