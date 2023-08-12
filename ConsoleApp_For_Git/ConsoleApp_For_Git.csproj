@@ -50,6 +50,8 @@
     <Compile Include="Operations\Operation_Divide.cs" />
     <Compile Include="Operations\Operation_Multiply.cs" />
     <Compile Include="Operations\Operation_Plus.cs" />
+    <Compile Include="Operations\Operation_PostLog.cs" />
+    <Compile Include="Operations\Operation_Sin.cs" />
     <Compile Include="Operations\Operation_Power.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

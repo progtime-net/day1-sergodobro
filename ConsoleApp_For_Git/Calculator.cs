@@ -25,11 +25,15 @@ namespace ConsoleApp_For_Git
             calculator_Operations.Add(new Operations.Operation_Multiply());
             calculator_Operations.Add(new Operations.Operation_Divide());
             calculator_Operations.Add(new Operations.Operation_Power());
+            calculator_Operations.Add(new Operations.Operation_PostLog());
+            calculator_Operations.Add(new Operations.Operation_Sin());
+            calculator_Operations.Add(new Operations.Operation_Cos());
         }
 
-        public double SolveEquation(string equation)
+        public double SolveEquation(string equation) //2+2-(30*(20-2))
         {
-            var data = SplitEquationToFormat(equation);
+            var data = SplitEquationToFormat(equation.Replace('.', ',').Replace("(-", "(0-")
+                .Replace("sin", "0sin"));
             List<int> openningSkobkas = new List<int>();
             data.Insert(0, "(");
             data.Add(")");
@@ -39,12 +43,11 @@ namespace ConsoleApp_For_Git
                     openningSkobkas.Add(i);
                 if (data[i]== ")")
                 {
-                    int from = openningSkobkas.Last();
+                    int from = openningSkobkas.Last(); 
+                    openningSkobkas.RemoveAt(openningSkobkas.Count-1);
                     int to = i;
-                    int oldDataL = data.Count;
                     var _res=SolveSkobka(data, from, to);
-                    int newDataL = data.Count;
-                    i -= (from - to);
+                    i -= (to - from);
                     //1-2+ (1-3)
                     //1-2+ {-2}
                     //1234 56789
@@ -57,12 +60,12 @@ namespace ConsoleApp_For_Git
         }
         private void ReplaceRange(List<string> span, int from, int to, string item)
         {
-            span.RemoveRange(from+1, to);
+            span.RemoveRange(from+1, to-from);
             span[from] = item;
         }
         public double SolveSkobka(List<string> span, int indexFrom, int indexTo)
         {
-            List<string> primer = span.GetRange(indexFrom+1, indexTo-1);
+            List<string> primer = span.GetRange(indexFrom + 1, (indexTo-1) - (indexFrom));
             for (int i = 1; i < primer.Count; i+=2)
             {
                 ICalculator_Operation _operation = FindOperation(primer[i]);
@@ -77,8 +80,7 @@ namespace ConsoleApp_For_Git
             for (int i = 1; i < primer.Count; i += 2)
             {
                 ICalculator_Operation _operation = FindOperation(primer[i]);
-                
-
+                 
                 primer[i - 1] = _operation.GetResult(double.Parse(primer[i - 1]), double.Parse(primer[i + 1])).ToString();
                 primer.RemoveRange(i, 2);
                 i -= 2;
@@ -92,47 +94,61 @@ namespace ConsoleApp_For_Git
         {
             List<string> formatString = new List<string>();
             string a = equation[0].ToString();
-            bool flag = true;
-            string nums = "0123456789.";
+            int q = 0;
+            string nums = "0123456789,.";
+            string skobkas = "()";
+            if (skobkas.Contains(equation[0])) q = 2;
             for (int i = 1; i < equation.Length; i++)
             {
-                if (nums.Contains(equation[i]) && flag)
-                {
-                    a += equation[i];
-                }
-                else if (nums.Contains(equation[i]) && !flag)
+
+                if (nums.Contains(equation[i]) && q != 0)
                 {
                     formatString.Add(a);
-                    a = "";
-                    flag = true;
-                    i--;
+                    a = equation[i].ToString();
+                    q = 0;
                 }
-                else if (!nums.Contains(equation[i]) && flag)
+                else if (skobkas.Contains(equation[i]))
                 {
                     formatString.Add(a);
-                    a = "";
-                    flag = false;
-                    i--;
+                    a = equation[i].ToString();
+
+
+                    q = 2;
+
+                }
+                else if (q != 1 && !nums.Contains(equation[i]))
+                {
+                    formatString.Add(a);
+                    a = equation[i].ToString();
+                    q = 1;
                 }
                 else
                 {
                     a += equation[i];
                 }
 
+
+
             }
             formatString.Add(a);
+
             return formatString;
         }
-
         public void Start()
         {
             LoadOperationList();
+            while (Ask() != "")
+            { }
+        }
+        private string Ask()
+        {
             Console.WriteLine("Write your expression:");
             string expression = Console.ReadLine();
+            if (expression == "") return "";
             double result = SolveEquation(expression);
             Console.WriteLine($"{result} it is then!");
             Console.WriteLine("Goodbye!");
-            Console.ReadLine();
+            return expression;
         }
     }
 }
