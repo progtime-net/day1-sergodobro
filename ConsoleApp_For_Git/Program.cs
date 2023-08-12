@@ -10,6 +10,8 @@ namespace ConsoleApp_For_Git
     {
         static void Main(string[] args)
         {
+            ICalculator calculator = new Calculator();
+            calculator.Start();
             Console.ReadLine();
         }
     } 
